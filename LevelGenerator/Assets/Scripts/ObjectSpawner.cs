@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class RandomObjectSpawner : MonoBehaviour
+public class ObjectSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject[] objects;
 
