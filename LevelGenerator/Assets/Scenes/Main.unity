@@ -249,6 +249,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   outerBorderPrefab: {fileID: 7433605710623115935, guid: 2db95998ec8e47b418c30644659e639b,
     type: 3}
+  roomPositionPrefab: {fileID: 3661791025467998243, guid: ed76c9b2885fc214e863d7c84c2bb01b,
+    type: 3}
   roomPrefabs:
   - {fileID: 3412209855638772388, guid: a941c5708e750074aac0f59daf7085d1, type: 3}
   - {fileID: 6656361013681047832, guid: aadbdcf051ddfa64abf80c8a5cb37fcc, type: 3}
@@ -285,7 +287,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   useSeed: 0
-  seed: 4
+  seed: 2
 --- !u!4 &1558105194
 Transform:
   m_ObjectHideFlags: 0
