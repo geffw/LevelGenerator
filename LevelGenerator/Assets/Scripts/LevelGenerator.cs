@@ -24,12 +24,15 @@ public class LevelGenerator : MonoBehaviour
 
         int randStartPos = Random.Range(0, gridSize);
         transform.position = new Vector3(transform.position.x + randStartPos * 10f + 5f, 5f, 0f);
+
+        Debug.Log($"LevelGenerator - Start pos: {transform.position}");
     }
 
     private void Update()
     {
         if (roomSpawnTimer <= 0f)
         {
+            SpawnRoom();
             Move();
             roomSpawnTimer = roomSpawnRate;
         }
@@ -61,13 +64,11 @@ public class LevelGenerator : MonoBehaviour
             }
             case 5:
             {
-                Vector2 newPos = new Vector2(transform.position.x, transform.position.y - 10f);
+                Vector2 newPos = new Vector2(transform.position.x, transform.position.y + 10f);
                 transform.position = newPos;
                 break;
             }
         }
-        
-        SpawnRoom();
     }
 
     private void SpawnRoom()
@@ -76,6 +77,8 @@ public class LevelGenerator : MonoBehaviour
         roomList.Add(room);
         room.transform.parent = rooms.transform;
         room.transform.name = $"Room{roomList.IndexOf(room)}";
+        
+        Debug.Log($"LevelGenerator - Room spawned at: {transform.position}");
     }
 
     private void SpawnOuterBorders()

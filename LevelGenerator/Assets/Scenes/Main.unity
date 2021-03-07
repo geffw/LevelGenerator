@@ -285,7 +285,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   useSeed: 0
-  seed: 0
+  seed: 4
 --- !u!4 &1558105194
 Transform:
   m_ObjectHideFlags: 0
