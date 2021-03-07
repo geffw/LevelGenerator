@@ -10,6 +10,8 @@ public class LevelGenerator : MonoBehaviour
     
     private List<GameObject> roomList = new List<GameObject>();
     private GameObject rooms;
+
+    private bool generating;
     
     private int direction;
     private float roomSpawnRate = 0.25f;
@@ -23,14 +25,17 @@ public class LevelGenerator : MonoBehaviour
         rooms.transform.name = "Rooms";
 
         int randStartPos = Random.Range(0, gridSize);
-        transform.position = new Vector3(transform.position.x + randStartPos * 10f + 5f, 5f, 0f);
+        transform.position = new Vector2(transform.position.x + randStartPos * 10f + 5f, 5f);
+
+        direction = Random.Range(1, 6);
+        generating = true;
 
         Debug.Log($"LevelGenerator - Start pos: {transform.position}");
     }
 
     private void Update()
     {
-        if (roomSpawnTimer <= 0f)
+        if (roomSpawnTimer <= 0f && generating)
         {
             SpawnRoom();
             Move();
@@ -44,29 +49,55 @@ public class LevelGenerator : MonoBehaviour
 
     private void Move()
     {
-        direction = Random.Range(1, 6);
-        
-        switch (direction)
+        if (direction == 1 || direction == 2)
         {
-            case 1:
-            case 2:
-            {
-                Vector2 newPos = new Vector2(transform.position.x + 10f, transform.position.y);
-                transform.position = newPos;
-                break;
-            }
-            case 3:
-            case 4:
+            if (transform.position.x > 5f)
             {
                 Vector2 newPos = new Vector2(transform.position.x - 10f, transform.position.y);
                 transform.position = newPos;
-                break;
+
+                direction = Random.Range(1, 6);
+                if (direction == 3)
+                {
+                    direction = 2;
+                }
+                else if (direction == 4)
+                {
+                    direction = 5;
+                }
             }
-            case 5:
+            else
+            {
+                direction = 5;
+            }
+        }
+        else if (direction == 3 || direction == 4)
+        {
+            if (transform.position.x < gridSize * 10f - 5f)
+            {
+                Vector2 newPos = new Vector2(transform.position.x + 10f, transform.position.y);
+                transform.position = newPos;
+
+                direction = Random.Range(3, 6);
+            }
+            else
+            {
+                direction = 5;
+            }
+        }
+        else if (direction == 5)
+        {
+            if (transform.position.y < gridSize * 10f - 5f)
             {
                 Vector2 newPos = new Vector2(transform.position.x, transform.position.y + 10f);
                 transform.position = newPos;
-                break;
+
+                direction = Random.Range(1, 6);
+            }
+            else
+            {
+                generating = false;
+                Debug.Log("End reached!");
             }
         }
     }
@@ -86,27 +117,23 @@ public class LevelGenerator : MonoBehaviour
         GameObject outerBorders = new GameObject();
         outerBorders.transform.name = "OuterBorders";
 
-        Vector3 outerBorderBottomPos = new Vector3(transform.position.x + gridSize * (10f / 2f) + 0.5f,
-            transform.position.y - 0.5f, transform.position.z);
+        Vector2 outerBorderBottomPos = new Vector2(transform.position.x + gridSize * (10f / 2f) + 0.5f, transform.position.y - 0.5f);
         GameObject outerBorderBottom = Instantiate(outerBorderPrefab, outerBorderBottomPos, Quaternion.identity);
         outerBorderBottom.transform.localScale = new Vector3(gridSize * 10f + 1f, 1, 1);
         outerBorderBottom.transform.parent = outerBorders.transform;
 
-        Vector3 outerBorderRightPos = new Vector3(transform.position.x + gridSize * 10f + 0.5f,
-            transform.position.y + gridSize * (10f / 2f) + 0.5f, transform.position.z);
+        Vector2 outerBorderRightPos = new Vector2(transform.position.x + gridSize * 10f + 0.5f, transform.position.y + gridSize * (10f / 2f) + 0.5f);
         GameObject outerBorderRight =
             Instantiate(outerBorderPrefab, outerBorderRightPos, Quaternion.Euler(new Vector3(0f, 0f, 90f)));
         outerBorderRight.transform.localScale = new Vector3(gridSize * 10f + 1f, 1, 1);
         outerBorderRight.transform.parent = outerBorders.transform;
 
-        Vector3 outerBorderTopPos = new Vector3(transform.position.x + gridSize * (10f / 2f) - 0.5f,
-            transform.position.y + gridSize * 10f + 0.5f, transform.position.z);
+        Vector2 outerBorderTopPos = new Vector2(transform.position.x + gridSize * (10f / 2f) - 0.5f, transform.position.y + gridSize * 10f + 0.5f);
         GameObject outerBorderTop = Instantiate(outerBorderPrefab, outerBorderTopPos, Quaternion.identity);
         outerBorderTop.transform.localScale = new Vector3(gridSize * 10f + 1f, 1, 1);
         outerBorderTop.transform.parent = outerBorders.transform;
 
-        Vector3 outerBorderLeftPos = new Vector3(transform.position.x - 0.5f,
-            transform.position.y + gridSize * (10f / 2f) - 0.5f, transform.position.z);
+        Vector2 outerBorderLeftPos = new Vector2(transform.position.x - 0.5f, transform.position.y + gridSize * (10f / 2f) - 0.5f);
         GameObject outerBorderLeft =
             Instantiate(outerBorderPrefab, outerBorderLeftPos, Quaternion.Euler(new Vector3(0f, 0f, 90f)));
         outerBorderLeft.transform.localScale = new Vector3(gridSize * 10f + 1f, 1, 1);
