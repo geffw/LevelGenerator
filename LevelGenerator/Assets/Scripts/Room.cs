@@ -6,6 +6,11 @@ public class Room : MonoBehaviour
 
     public int difficulty;
 
+    private void Start()
+    {
+        difficulty = (int)transform.position.y;
+    }
+
     public void Destroy()
     {
         Destroy(gameObject);

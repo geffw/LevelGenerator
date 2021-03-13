@@ -12,6 +12,8 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] private int gridSize = 4;
 
     public static event Action<LevelGenerator> OnGenerationComplete;
+
+    public static int GridSize;
     
     private List<GameObject> roomList = new List<GameObject>();
     private GameObject rooms;
@@ -30,6 +32,8 @@ public class LevelGenerator : MonoBehaviour
         SpawnOuterBorders();
         SpawnRoomPositions();
         StartGeneration();
+
+        GridSize = gridSize;
     }
 
     private void Update()
@@ -146,7 +150,6 @@ public class LevelGenerator : MonoBehaviour
         roomList.Add(room);
         room.transform.parent = rooms.transform;
         room.transform.name = $"Room{roomList.IndexOf(room)}";
-        room.GetComponent<Room>().difficulty = currentLayer;
 
         //Debug.Log($"LevelGenerator - Room (type: {room.GetComponent<Room>().type}) spawned at: {transform.position}");
     }
