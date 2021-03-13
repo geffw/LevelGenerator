@@ -113,7 +113,7 @@ public class LevelGenerator : MonoBehaviour
                 }
                 else
                 {
-                    if (previousRoom.type != 2 && previousRoom.type != 3)
+                    if (previousRoom.type != RoomType.LeftRightTop && previousRoom.type != RoomType.LeftRightTopBottom)
                     {
                         previousRoom.Destroy();
                     

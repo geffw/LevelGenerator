@@ -1,8 +1,16 @@
 ﻿using UnityEngine;
 
+public enum RoomType
+{
+    LeftRight = 0,
+    LeftRightBottom = 1,
+    LeftRightTop = 2,
+    LeftRightTopBottom = 3
+}
+
 public class Room : MonoBehaviour
 {
-    public int type;
+    public RoomType type;
 
     public int difficulty;
 
